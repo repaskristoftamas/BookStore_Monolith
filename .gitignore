@@ -398,3 +398,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Angular
+Angular/node_modules/
+Angular/dist/
+Angular/.angular/
+Angular/.vscode/
