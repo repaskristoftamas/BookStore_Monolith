@@ -1,0 +1,29 @@
+{
+  "genres": [
+    { "Name": "Fantasy" },
+    { "Name": "Science Fiction" },
+    { "Name": "Mystery" },
+    { "Name": "Historical Fiction" },
+    { "Name": "Horror" }
+  ],
+  "authors": [
+    { "Name": "J.K. Rowling" },
+    { "Name": "Isaac Asimov" },
+    { "Name": "Agatha Christie" },
+    { "Name": "J.R.R. Tolkien" },
+    { "Name": "Stephen King" },
+    { "Name": "George Orwell" },
+    { "Name": "Mary Shelley" },
+    { "Name": "Dan Brown" }
+  ],
+  "books": [
+    { "Title": "Harry Potter and the Philosopher's Stone", "Description": "A young wizard's journey begins.", "AuthorId": 1, "GenreId": 1 },
+    { "Title": "Foundation", "Description": "A sci-fi classic about the fall of the Galactic Empire.", "AuthorId": 2, "GenreId": 2 },
+    { "Title": "Murder on the Orient Express", "Description": "A famous detective solves a murder mystery.", "AuthorId": 3, "GenreId": 3 },
+    { "Title": "The Hobbit", "Description": "A hobbit's adventure to reclaim a lost kingdom.", "AuthorId": 4, "GenreId": 1 },
+    { "Title": "The Shining", "Description": "A haunted hotel drives a man to madness.", "AuthorId": 5, "GenreId": 5 },
+    { "Title": "1984", "Description": "A dystopian novel about a totalitarian society.", "AuthorId": 6, "GenreId": 2 },
+    { "Title": "Frankenstein", "Description": "A scientist creates a living monster.", "AuthorId": 7, "GenreId": 5 },
+    { "Title": "The Da Vinci Code", "Description": "A thrilling mystery involving secret societies.", "AuthorId": 8, "GenreId": 3 }
+  ]
+}
