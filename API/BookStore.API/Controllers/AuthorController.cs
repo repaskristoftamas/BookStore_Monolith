@@ -23,20 +23,5 @@ namespace BookStore.API.Controllers
 
             return Ok(_mapper.Map<IEnumerable<AuthorDto>>(result.Items));
         }
-
-        [HttpGet("by-book/{bookId}")]
-        public async Task<ActionResult<AuthorDto>> GetAuthorByBookId(int bookId)
-        {
-            try
-            {
-                var result = await _authorService.GetAuthorByBookIdAsync(bookId);
-
-                return Ok(_mapper.Map<AuthorDto>(result));
-            }
-            catch (KeyNotFoundException ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
     }
 }
