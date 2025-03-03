@@ -11,14 +11,11 @@ namespace BookStore.API.Repositories
 
         public IQueryable<Author> GetAuthors(AuthorQueryParameters authorQueryParameters)
         {
-            var (name, bookTitle, searchQuery) = authorQueryParameters;
-
             var authors = _context.Set<Author>().AsQueryable();
 
-            return authors
-                .FilterByName(name)
-                .FilterByBook(bookTitle)
-                .SearchInDb(searchQuery);
+            return authors.FilterByName(authorQueryParameters.Query);
         }
+
+        public async Task<Author?> GetAuthorByBookIdAsync(int bookId) => await _context.Set<Author>().FilterByBookIdAsync(bookId);
     }
 }
