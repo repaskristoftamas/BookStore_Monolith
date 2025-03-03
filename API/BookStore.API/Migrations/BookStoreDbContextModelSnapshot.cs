@@ -54,7 +54,7 @@ namespace BookStore.API.Migrations
                         .HasMaxLength(2500)
                         .HasColumnType("nvarchar(2500)");
 
-                    b.Property<int>("GenreId")
+                    b.Property<int?>("GenreId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -100,8 +100,7 @@ namespace BookStore.API.Migrations
                     b.HasOne("BookStore.API.Entities.Genre", "Genre")
                         .WithMany("Books")
                         .HasForeignKey("GenreId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Author");
 

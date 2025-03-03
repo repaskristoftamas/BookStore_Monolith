@@ -1,6 +1,5 @@
 ﻿using BookStore.API.DbContexts;
 using BookStore.API.Entities;
-using BookStore.API.ExtensionMethods;
 using BookStore.API.QueryParameters;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,18 +11,77 @@ namespace BookStore.API.Repositories
 
         public IQueryable<Book> GetBooks(BookQueryParameters bookQueryParameters)
         {
-            var (title, author, genre, includeAuthor, includeGenre, searchQuery) = bookQueryParameters;
+            var (includeAuthor, includeGenre, query, filterBy) = bookQueryParameters;
 
             var books = _context.Set<Book>().AsQueryable();
 
             if (includeAuthor) books = books.Include(b => b.Author);
             if (includeGenre) books = books.Include(b => b.Genre);
 
-            return books
-                .FilterByTitle(title)
-                .FilterByAuthor(author)
-                .FilterByGenre(genre)
-                .SearchInDb(searchQuery);
+            return filterBy switch
+            {
+                "title" => FilterByTitle(books, query),
+                "author" => FilterByAuthor(books, query),
+                "genre" => FilterByGenre(books, query),
+                _ => books
+            };
+        }
+
+        public async Task<Book?> GetBookDetailsByIdAsync(int bookId)
+        {
+            return await _context.Set<Book>()
+                .Include(b => b.Author)
+                .Include(b => b.Genre)
+                .FirstOrDefaultAsync(b => b.Id == bookId);
+        }
+
+        public async Task<Book> CreateBookAsync(Book book)
+        {
+            _context.Set<Book>().Add(book);
+            await _context.SaveChangesAsync();
+            return book;
+        }
+
+        public async Task<Author?> GetAuthorByNameAsync(string authorName) =>
+            await _context.Set<Author>().FirstOrDefaultAsync(a => a.Name == authorName);
+
+        public async Task<Genre?> GetGenreByNameAsync(string genreName) =>
+            await _context.Set<Genre>().FirstOrDefaultAsync(a => a.Name == genreName);
+
+        public async Task AddAuthorAsync(Author author)
+        {
+            _context.Set<Author>().Add(author);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddGenreAsync(Genre genre)
+        {
+            _context.Set<Genre>().Add(genre);
+            await _context.SaveChangesAsync();
+        }
+
+        private IQueryable<Book> FilterByTitle(IQueryable<Book> books, string? title)
+        {
+            if (!string.IsNullOrWhiteSpace(title))
+                return books.Where(b => b.Title == title.Trim());
+
+            return books;
+        }
+
+        private IQueryable<Book> FilterByAuthor(IQueryable<Book> books, string? author)
+        {
+            if (!string.IsNullOrWhiteSpace(author))
+                return books.Where(b => b.Author!.Name == author.Trim());
+
+            return books;
+        }
+
+        private IQueryable<Book> FilterByGenre(IQueryable<Book> books, string? genre)
+        {
+            if (!string.IsNullOrWhiteSpace(genre))
+                return books.Where(b => b.Genre!.Name == genre.Trim());
+
+            return books;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace BookStore.API.Migrations
                     Title = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(2500)", maxLength: 2500, nullable: true),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    GenreId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

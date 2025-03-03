@@ -1,0 +1,47 @@
+<div class="common-list">
+    <h1>Books</h1>
+
+    <div class="common-search">
+      <input type="text" class="common-searchbox" (keydown.enter)="fetchBooks()" [(ngModel)]="query" [placeholder]="getPlaceholder()" [disabled]="!filterBy">
+    </div>
+    
+    <button (click)="fetchBooks()">Search</button>
+
+    <div class="radioButtons">
+      <label>
+        <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="title"> Filter by Title
+      </label>
+      <label>
+        <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="author"> Filter by Author
+      </label>
+      <label>
+        <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="genre"> Filter by Genre
+      </label>
+      <label>
+        <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="" (change)="clearQueryIfNoFilter()"> No Filter
+      </label>
+    </div>
+
+    <ul>
+      @for (book of books; track book.id) {
+        <li>
+          <span>{{ book.title }}</span>
+          <button [disabled]="isDisabled" (click)="openModal(book, $event)">✏️</button>
+        </li>
+      }
+      <li class="add-book">
+        <button (click)="addNewBook($event)">Add new book</button>
+        </li>
+    </ul>
+
+    @if (selectedBook) {
+      <app-book-details
+        [book]="selectedBook"
+        [authorName]="authorName"
+        (closeModal)="closeModal()"
+        (saveBook)="updateBook($event)">
+      </app-book-details>
+    }
+   
+  </div>
+

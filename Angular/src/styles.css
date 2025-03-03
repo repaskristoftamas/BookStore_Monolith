@@ -1,1 +1,82 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #ffcc00;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+.common-list {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #fff4cc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.common-list h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.common-search {
+  margin-bottom: 15px;
+}
+
+.common-searchbox {
+  width: 50%;
+}
+
+.common-list button {
+  background: #ffcc00;
+  color: black;
+  border: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.1s;
+  font-weight: bold;
+}
+
+.common-list button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+.common-list button:hover {
+  background-color: #e6b800;
+}
+
+.common-list button:active {
+  background-color: #cca300;
+  transform: scale(0.95);
+}
+
+.common-list ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.common-list li {
+  background: white;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.common-list li:nth-child(even) {
+  background: #ffeeaa;
+}
+
+.common-list li:hover {
+  background-color: #e0e0e0 !important;
+}

@@ -1,0 +1,19 @@
+<div class="modal-overlay">
+    <div class="modal-content">
+      @if (book) {
+        @if (book.title) {
+          <h2>{{ book.title }}</h2>
+        }
+        @else {
+          <h2>Create new book</h2>
+        }
+        <label>Title: <input type="text" [(ngModel)]="book.title" maxlength="250" placeholder="Enter title"></label>
+        <label>Author: <input type="text" [(ngModel)]="authorName" (ngModelChange)="updateAuthorName($event)" maxlength="250" placeholder="Enter author"></label>
+        <label>Description: <textarea [(ngModel)]="book.description" maxlength="2500" rows="5" cols="50" placeholder="Enter description"></textarea></label>
+      }
+
+      <button (click)="save()">Save</button>
+      <button (click)="close()">Close</button>
+    </div>
+  </div>
+  
