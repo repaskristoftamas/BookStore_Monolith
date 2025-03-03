@@ -10,7 +10,6 @@ namespace BookStore.API.Services
     public interface IAuthorService
     {
         Task<PagedResult<Author>> GetAuthors(AuthorQueryParameters authorQueryParameters);
-        Task<Author> GetAuthorByBookIdAsync(int bookId);
     }
 
     public class AuthorService(IAuthorRepository authorRepository) : IAuthorService
@@ -32,13 +31,6 @@ namespace BookStore.API.Services
                 .ToListAsync();
 
             return new PagedResult<Author>(result, paginationMetaData);
-        }
-
-        public async Task<Author> GetAuthorByBookIdAsync(int bookId)
-        {
-            var result = await _authorRepository.GetAuthorByBookIdAsync(bookId);
-
-            return result is null ? throw new KeyNotFoundException($"Author not found for book ID {bookId}") : result;
         }
     }
 }
