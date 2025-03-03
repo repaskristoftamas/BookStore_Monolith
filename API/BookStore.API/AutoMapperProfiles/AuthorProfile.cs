@@ -9,6 +9,7 @@ namespace BookStore.API.AutoMapperProfiles
         public AuthorProfile()
         {
             CreateMap<Author, AuthorDto>();
+            CreateMap<AuthorDto, Author>();
         }
     }
 }

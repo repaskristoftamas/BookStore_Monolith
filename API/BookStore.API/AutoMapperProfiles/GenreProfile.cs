@@ -9,6 +9,7 @@ namespace BookStore.API.AutoMapperProfiles
         public GenreProfile()
         {
             CreateMap<Genre, GenreDto>();
+            CreateMap<GenreDto, Genre>();
         }
     }
 }
