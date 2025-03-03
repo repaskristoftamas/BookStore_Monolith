@@ -11,11 +11,3 @@ export const routes: Routes = [
     { path: 'genres', component: GenreComponent, title: "Genres" },
     { path: '**', redirectTo: '' }
 ];
-
-/*
-    { path: 'home', component: HomeComponent, title: "Home - BookStore" },
-    { path: 'authors', component: AuthorComponent, title: "Authors"},
-    { path: 'books', component: BookComponent, title: "Books" },
-    { path: 'genres', component: GenreComponent, title: "Genres" },
-    { path: '**', redirectTo: '/home', pathMatch: 'full' }
-*/
