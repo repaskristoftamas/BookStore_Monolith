@@ -1,4 +1,5 @@
-﻿using BookStore.API.Entities;
+﻿using AutoMapper;
+using BookStore.API.Entities;
 using BookStore.API.Helpers;
 using BookStore.API.Models;
 using BookStore.API.QueryParameters;
@@ -9,14 +10,17 @@ namespace BookStore.API.Services
 {
     public interface IBookService
     {
-        Task<PagedResult<Book>> GetBooks(BookQueryParameters bookQueryParameters);
+        Task<PagedResult<BookDto>> GetBooksAsync(BookQueryParameters bookQueryParameters);
+        Task<BookDto?> GetBookDetailsByIdAsync(int bookId);
+        Task<BookDto> CreateBookAsync(BookForCreationDto bookDto);
     }
 
-    public class BookService(IBookRepository bookRepository) : IBookService
+    public class BookService(IBookRepository bookRepository, IMapper mapper) : IBookService
     {
-        private readonly IBookRepository _bookRepository = bookRepository;
+        private readonly IBookRepository _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
+        private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-        public async Task<PagedResult<Book>> GetBooks(BookQueryParameters bookQueryParameters)
+        public async Task<PagedResult<BookDto>> GetBooksAsync(BookQueryParameters bookQueryParameters)
         {
             ValidationHelper.ValidatePagination(bookQueryParameters.PageNumber, bookQueryParameters.PageSize);
 
@@ -30,7 +34,50 @@ namespace BookStore.API.Services
                 .Take(bookQueryParameters.PageSize)
                 .ToListAsync();
 
-            return new PagedResult<Book>(result, paginationMetaData);
+            var pagedResult = new PagedResult<Book>(result, paginationMetaData);
+
+            return _mapper.Map<PagedResult<BookDto>>(pagedResult);
+        }
+
+        public async Task<BookDto?> GetBookDetailsByIdAsync(int bookId)
+        {
+            var result = await _bookRepository.GetBookDetailsByIdAsync(bookId);
+
+            return result is null ? throw new KeyNotFoundException($"Book not found for book ID {bookId}") : _mapper.Map<BookDto>(result);
+        }
+
+        public async Task<BookDto> CreateBookAsync(BookForCreationDto bookDto)
+        {
+            var book = _mapper.Map<Book>(bookDto);
+
+            if (book.Author is null) throw new InvalidOperationException("Author is required");
+
+            var existingAuthor = await _bookRepository.GetAuthorByNameAsync(book.Author.Name);
+
+            if (existingAuthor is null)
+            {
+                existingAuthor = new Author { Name = book.Author.Name };
+                await _bookRepository.AddAuthorAsync(existingAuthor);
+            }
+
+            book.Author = existingAuthor;
+
+            if (book.Genre is not null)
+            {
+                var existingGenre = await _bookRepository.GetGenreByNameAsync(book.Genre.Name);
+
+                if (existingGenre is null)
+                {
+                    existingGenre = new Genre { Name = book.Genre.Name };
+                    await _bookRepository.AddGenreAsync(existingGenre);
+                }
+
+                book.Genre = existingGenre;
+            }
+
+            var result = await _bookRepository.CreateBookAsync(book);
+
+            return _mapper.Map<BookDto>(result);
         }
     }
 }
