@@ -1,10 +1,13 @@
-import { Author } from "./author";
-import { Genre } from "./genre";
-
 export interface Book {
-    id: number;
+    id?: number;
     title: string;
     description?: string;
-    author: Author;
-    genre?: Genre;
+    author: {
+        id: number,
+        name: string
+    };
+    genre: {
+        id: number,
+        name: string
+    };
 }
