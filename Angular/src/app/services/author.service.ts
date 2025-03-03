@@ -16,9 +16,5 @@ export class AuthorService {
     const url = name ? `${this.apiUrl}?query=${encodeURIComponent(name)}` : this.apiUrl;
     return this.httpClient.get<Author[]>(url);
   }
-
-  getAuthorByBookId(bookId: number): Observable<Author> {
-    return this.httpClient.get<Author>(`${this.apiUrl}/by-book/${bookId}`);
-  }
   
 }
