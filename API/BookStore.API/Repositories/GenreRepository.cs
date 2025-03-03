@@ -11,14 +11,9 @@ namespace BookStore.API.Repositories
 
         public IQueryable<Genre> GetGenres(GenreQueryParameters genreQueryParameters)
         {
-            var (name, bookTitle, searchQuery) = genreQueryParameters;
-
             var genres = _context.Set<Genre>().AsQueryable();
 
-            return genres
-                .FilterByName(name)
-                .FilterByBook(bookTitle)
-                .SearchInDb(searchQuery);
+            return genres.FilterByName(genreQueryParameters.Query);
         }
     }
 }

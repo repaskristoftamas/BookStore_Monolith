@@ -12,18 +12,20 @@ namespace BookStore.API.Repositories
 
         public IQueryable<Book> GetBooks(BookQueryParameters bookQueryParameters)
         {
-            var (title, author, genre, includeAuthor, includeGenre, searchQuery) = bookQueryParameters;
+            var (includeAuthor, includeGenre, query, filterBy) = bookQueryParameters;
 
             var books = _context.Set<Book>().AsQueryable();
 
             if (includeAuthor) books = books.Include(b => b.Author);
             if (includeGenre) books = books.Include(b => b.Genre);
 
-            return books
-                .FilterByTitle(title)
-                .FilterByAuthor(author)
-                .FilterByGenre(genre)
-                .SearchInDb(searchQuery);
+            return filterBy switch
+            {
+                "title" => books.FilterByTitle(query),
+                "author" => books.FilterByAuthor(query),
+                "genre" => books.FilterByGenre(query),
+                _ => books//.SearchInDb(query)
+            };
         }
     }
 }
