@@ -1,0 +1,35 @@
+.site-header {
+    background-color: #333;
+    padding: 25px;
+  }
+  
+  .site-header ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .site-header li {
+    display: inline;
+  }
+  
+  .site-header a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 12px;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 5px;
+  }
+
+  .site-header a:hover {
+    background-color: #ffcc00;
+    color: black;
+  }
+  
+  .site-header a.active {
+    border-bottom: 2px solid #ffcc00;
+  }
+  

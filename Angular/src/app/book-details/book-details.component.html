@@ -1,0 +1,14 @@
+<div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>{{ book.title }}</h2>
+      @if (book.title && book.author) {
+        <label>Title: <input type="text" [(ngModel)]="book.title"></label>
+        <label>Author: <input type="text" [(ngModel)]="book.author.name"></label>
+        <!--label>Genre: <input type="text" [(ngModel)]="book.genre.name"></label-->
+      }
+
+      <button (click)="save()">Save</button>
+      <button (click)="close()">Close</button>
+    </div>
+  </div>
+  

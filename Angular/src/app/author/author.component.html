@@ -1,0 +1,15 @@
+<div class="common-list">
+    <h1>Authors</h1>
+
+    <div class="common-search">
+      <input type="text" class="common-searchbox" (keydown.enter)="fetchAuthors()" [(ngModel)]="query" placeholder="Search by Name (exact match)">
+    </div>
+
+    <button (click)="fetchAuthors()">Search</button>
+    <ul>
+      @for (author of authors; track author.id) {
+        <li>{{ author.name }}</li>
+      }
+    </ul>
+  </div>
+  

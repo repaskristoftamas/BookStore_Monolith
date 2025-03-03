@@ -1,0 +1,15 @@
+<div class="common-list">
+    <h1>Genres</h1>
+
+    <div class="common-search">
+      <input type="text" class="common-searchbox" (keydown.enter)="fetchGenres()" [(ngModel)]="query" placeholder="Search by Name (exact match)">
+    </div>
+
+    <button (click)="fetchGenres()">Search</button>
+    <ul>
+      @for (genre of genres; track genre.id) {
+        <li>{{ genre.name }}</li>
+      }
+    </ul>
+  </div>
+  
