@@ -21,6 +21,10 @@ namespace BookStore.API.ExtensionMethods
             return authors;
         }
 
+        public static async Task<Author?> FilterByBookIdAsync(this IQueryable<Author> authors, int bookId)
+            => await authors.FirstOrDefaultAsync(a => a.Books.Any(b => b.Id == bookId))
+            ?? throw new ArgumentException("Invalid book ID. It must be greater than zero.");
+
         public static IQueryable<Author> SearchInDb(this IQueryable<Author> authors, string? searchQuery)
         {
             if (!string.IsNullOrWhiteSpace(searchQuery))
