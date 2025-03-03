@@ -6,7 +6,5 @@ namespace BookStore.API.Repositories
     public interface IAuthorRepository
     {
         IQueryable<Author> GetAuthors(AuthorQueryParameters authorQueryParameters);
-
-        Task<Author?> GetAuthorByBookIdAsync(int bookId);
     }
 }
