@@ -34,8 +34,8 @@ namespace BookStore.API.ExtensionMethods
             if (!string.IsNullOrWhiteSpace(searchQuery))
                 return books.Where(b =>
                     EF.Functions.Like(b.Title, $"%{searchQuery.Trim()}%") ||
-                    EF.Functions.Like(b.Author!.Name, $"@{searchQuery.Trim()}%") ||
-                    EF.Functions.Like(b.Genre!.Name, $"@{searchQuery.Trim()}%")
+                    EF.Functions.Like(b.Author!.Name, $"%{searchQuery.Trim()}%") ||
+                    EF.Functions.Like(b.Genre!.Name, $"%{searchQuery.Trim()}%")
                 );
 
             return books;
@@ -46,8 +46,8 @@ namespace BookStore.API.ExtensionMethods
             if (!string.IsNullOrWhiteSpace(searchQuery))
                 return books.Where(b =>
                     b.Title.Contains(searchQuery.Trim(), StringComparison.OrdinalIgnoreCase) ||
-                    (b.Author!.Name.Contains(searchQuery)) ||
-                    (b.Genre!.Name.Contains(searchQuery))
+                    b.Author!.Name.Contains(searchQuery.Trim(), StringComparison.OrdinalIgnoreCase) ||
+                    b.Genre!.Name.Contains(searchQuery.Trim(), StringComparison.OrdinalIgnoreCase)
                 );
 
             return books;
