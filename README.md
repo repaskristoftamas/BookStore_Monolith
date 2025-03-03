@@ -12,4 +12,4 @@ No real reason—just for fun and learning!
 - **Frontend**: Angular | React | Vue.js
 
 ## 🚀 Future Plans
-This repository will later have a **microservices-based sibling** with the most preferred framework, where additional features like **payment systems, shopping cart, and more** will be introduced.
+This repository will be built in a **monolithic architecture** and later on it will have a **microservices-based sibling** with the most preferred framework, where additional features like **payment systems, shopping cart, and more** will be introduced.
