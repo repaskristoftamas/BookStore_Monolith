@@ -16,11 +16,11 @@ export class BookComponent {
   books: Book[] = [];
   query: string = '';
   filterBy: string = '';
-  includeAuthor: boolean = false;
-  includeGenre: boolean = false;
 
   isModalOpen = false;
   selectedBook: Book | null = null;
+  authorName: string = '';
+  isDisabled: boolean = true;
 
   constructor(private bookService: BookService, private authorService: AuthorService) {}
 
@@ -34,8 +34,6 @@ export class BookComponent {
     const queryParams: any = {
       Query: this.query || undefined,
       FilterBy: this.filterBy || undefined,
-      IncludeAuthor: this.includeAuthor,
-      IncludeGenre: this.includeGenre
     };
 
     this.bookService.getBooks(queryParams).subscribe({
@@ -60,19 +58,11 @@ export class BookComponent {
     if (!this.filterBy) {
       this.query = '';
     }
+    this.fetchBooks();
   }
 
-  selectBookLazyLoading(book: Book){
-    if(!book.author) {
-      this.authorService.getAuthorByBookId(book.id).subscribe(author => {
-        if(this.selectedBook) {
-          this.selectedBook.author = author;
-        }
-      });
-    }
-  }
-
-  openModal(book: Book) {
+  openModal(book: Book, event: Event) {
+    event.stopPropagation();
     this.selectBookLazyLoading(book);
     this.selectedBook = { ...book };
     this.isModalOpen = true;
@@ -81,6 +71,28 @@ export class BookComponent {
   closeModal() {
     this.isModalOpen = false;
     this.selectedBook = null;
+  }
+
+  selectBookLazyLoading(book: Book) {
+    if(book.id && !book.author?.id) {
+      this.bookService.getBookById(book.id).subscribe(fetchedBook => {
+        if(this.selectedBook && fetchedBook.author) {
+          this.authorName = fetchedBook.author.name;
+        }
+      })
+    }
+  }
+
+  addNewBook(event: Event) {
+    event.stopPropagation();
+    this.selectedBook = {
+      title: '',
+      description: '',
+      author: { id: 0, name: '' },
+      genre: { id: 0, name: '' }
+    };
+    this.authorName = '';
+    this.isModalOpen = true;
   }
 
   updateBook(updatedBook: Book) {

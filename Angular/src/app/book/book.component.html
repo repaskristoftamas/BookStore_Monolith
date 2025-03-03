@@ -22,24 +22,22 @@
       </label>
     </div>
 
-    <!--label>
-      <input type="checkbox" [(ngModel)]="includeAuthor">
-      Include Authors
-    </label-->
-
     <ul>
       @for (book of books; track book.id) {
-        <li (click)="openModal(book)">{{ book.title }}
-          @if (includeAuthor && book.author) {
-            - {{ book.author.name }}
-          }
+        <li>
+          <span>{{ book.title }}</span>
+          <button [disabled]="isDisabled" (click)="openModal(book, $event)">✏️</button>
         </li>
       }
+      <li class="add-book">
+        <button (click)="addNewBook($event)">Add new book</button>
+        </li>
     </ul>
 
     @if (selectedBook) {
       <app-book-details
         [book]="selectedBook"
+        [authorName]="authorName"
         (closeModal)="closeModal()"
         (saveBook)="updateBook($event)">
       </app-book-details>

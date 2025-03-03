@@ -14,13 +14,21 @@
     background: white;
     padding: 20px;
     border-radius: 8px;
-    width: 300px;
-    text-align: center;
+    width: 60%;
+    text-align: left;
   }
   
-  .modal-content input {
+  .modal-content input,
+  .modal-content textarea {
+    flex: 1;
     width: 100%;
-    margin-bottom: 10px;
+    padding: 5px;
+  }
+
+  .modal-content textarea {
+    height: 300px;
+    max-height: 600px;
+    resize: vertical;
   }
   
   button {

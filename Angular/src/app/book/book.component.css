@@ -25,3 +25,13 @@ label:hover {
     transform: scale(1.2);
     accent-color: #ffcc00;
 }
+
+.add-book:hover {
+    transform: scale(1.05);
+}
+
+.add-book button {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
