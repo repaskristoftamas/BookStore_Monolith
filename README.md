@@ -9,7 +9,7 @@ This is a **very work in progress** repository and may contain unintentional mis
 No real reason—just for fun and learning!
 
 ## 🏗️ Tech Stack  
-- **Backend**: ASP.NET Web API
+- **Backend**: ASP.NET Core Web API
 - **Frontend**: Angular | React | Vue.js
 
 ## 🚀 Future Plans
