@@ -5,7 +5,7 @@ namespace BookStore.API.Repositories
 {
     public interface IBookRepository
     {
-        IQueryable<Book> GetBooks(BookQueryParameters bookQueryParameters);
+        IQueryable<Book> GetBooks(FilterOptions filterOptions);
         Task<Book?> GetBookDetailsByIdAsync(int bookId);
         Task<Book> CreateBookAsync(Book book);
         Task<Author?> GetAuthorByNameAsync(string authorName);

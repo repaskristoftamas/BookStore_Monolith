@@ -9,20 +9,18 @@ namespace BookStore.API.Repositories
     {
         private readonly BookStoreDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-        public IQueryable<Book> GetBooks(BookQueryParameters bookQueryParameters)
+        public IQueryable<Book> GetBooks(FilterOptions filterOptions)
         {
-            var (includeAuthor, includeGenre, query, filterBy) = bookQueryParameters;
-
             var books = _context.Set<Book>().AsQueryable();
 
-            if (includeAuthor) books = books.Include(b => b.Author);
-            if (includeGenre) books = books.Include(b => b.Genre);
+            if (filterOptions.IncludeAuthor) books = books.Include(b => b.Author);
+            if (filterOptions.IncludeGenre) books = books.Include(b => b.Genre);
 
-            return filterBy switch
+            return filterOptions.FilterBy switch
             {
-                "title" => FilterByTitle(books, query),
-                "author" => FilterByAuthor(books, query),
-                "genre" => FilterByGenre(books, query),
+                "title" => FilterByTitle(books, filterOptions.Query),
+                "author" => FilterByAuthor(books, filterOptions.Query),
+                "genre" => FilterByGenre(books, filterOptions.Query),
                 _ => books
             };
         }
