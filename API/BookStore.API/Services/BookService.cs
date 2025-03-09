@@ -10,7 +10,7 @@ namespace BookStore.API.Services
 {
     public interface IBookService
     {
-        Task<PagedResult<BookDto>> GetBooksAsync(BookQueryParameters bookQueryParameters);
+        Task<PagedResult<BookDto>> GetBooksAsync(FilterOptions filterOptions);
         Task<BookDto?> GetBookDetailsByIdAsync(int bookId);
         Task<BookDto> CreateBookAsync(BookForCreationDto bookDto);
     }
@@ -20,37 +20,39 @@ namespace BookStore.API.Services
         private readonly IBookRepository _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-        public async Task<PagedResult<BookDto>> GetBooksAsync(BookQueryParameters bookQueryParameters)
+        public async Task<PagedResult<BookDto>> GetBooksAsync(FilterOptions filterOptions)
         {
-            ValidationHelper.ValidatePagination(bookQueryParameters.PageNumber, bookQueryParameters.PageSize);
+            //ValidationHelper.ValidatePagination(filterOptions.PageNumber, filterOptions.PageSize);
 
-            var books = _bookRepository.GetBooks(bookQueryParameters);
+            var books = _bookRepository.GetBooks(filterOptions);
 
             var totalItemCount = await books.CountAsync();
-            var paginationMetaData = new PaginationMetaData(totalItemCount, bookQueryParameters.PageSize, bookQueryParameters.PageNumber);
+            //var paginationMetaData = new PaginationMetaData(totalItemCount, filterOptions.PageSize, filterOptions.PageNumber);
 
-            var result = await books.OrderBy(b => b.Title)
-                .Skip(bookQueryParameters.PageSize * (bookQueryParameters.PageNumber - 1))
-                .Take(bookQueryParameters.PageSize)
-                .ToListAsync();
+            var result = await books.OrderBy(b => b.Title).ToListAsync();
+                //.Skip(filterOptions.PageSize * (filterOptions.PageNumber - 1))
+                //.Take(filterOptions.PageSize)
+                //.ToListAsync();
 
-            var pagedResult = new PagedResult<Book>(result, paginationMetaData);
+            var pagedResult = new PagedResult<Book>(result, null/*paginationMetaData*/);
 
             return _mapper.Map<PagedResult<BookDto>>(pagedResult);
         }
 
         public async Task<BookDto?> GetBookDetailsByIdAsync(int bookId)
         {
+            if (bookId < 1) throw new InvalidOperationException("Book id is invalid.");
+
             var result = await _bookRepository.GetBookDetailsByIdAsync(bookId);
 
-            return result is null ? throw new KeyNotFoundException($"Book not found for book ID {bookId}") : _mapper.Map<BookDto>(result);
+            return result is null ? throw new KeyNotFoundException($"Book not found for book ID {bookId}.") : _mapper.Map<BookDto>(result);
         }
 
         public async Task<BookDto> CreateBookAsync(BookForCreationDto bookDto)
         {
             var book = _mapper.Map<Book>(bookDto);
 
-            if (book.Author is null) throw new InvalidOperationException("Author is required");
+            if (book.Author is null) throw new InvalidOperationException("Author is required.");
 
             var existingAuthor = await _bookRepository.GetAuthorByNameAsync(book.Author.Name);
 
