@@ -13,9 +13,9 @@ namespace BookStore.API.Controllers
         private readonly IBookService _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks([FromQuery] BookQueryParameters bookQueryParameters)
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks([FromQuery] FilterOptions filterOptions)
         {
-            var result = await _bookService.GetBooksAsync(bookQueryParameters);
+            var result = await _bookService.GetBooksAsync(filterOptions);
 
             Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(result.Pagination));
 
