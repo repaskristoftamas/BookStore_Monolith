@@ -10,6 +10,7 @@ namespace BookStore.API.AutoMapperProfiles
         {
             CreateMap<Genre, GenreDto>();
             CreateMap<GenreDto, Genre>();
+            CreateMap<GenreForCreationDto, Genre>();
         }
     }
 }
