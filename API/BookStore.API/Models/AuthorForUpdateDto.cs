@@ -2,12 +2,13 @@
 
 namespace BookStore.API.Models
 {
-    public class AuthorForUpdateDto
-    {
+    public record class AuthorForUpdateDto(
         [Required(ErrorMessage = "Author must have a name.")]
         [MaxLength(250)]
-        public string Name { get; set; } = string.Empty;
+        string Name,
 
-        public ICollection<BookDto> Books { get; set; } = [];
+        ICollection<BookDto> Books)
+    {
+        public AuthorForUpdateDto(string name) : this(name, []) { }
     }
 }

@@ -2,15 +2,16 @@
 
 namespace BookStore.API.Models
 {
-    public class BookForCreationDto
-    {
+    public record class BookForCreationDto(
         [Required(ErrorMessage = "Book must have a title.")]
         [MaxLength(250)]
-        public string Title { get; set; } = string.Empty;
+        string Title,
 
         [MaxLength(2500)]
-        public string? Description { get; set; }
-        public AuthorDto? Author { get; set; }
-        public GenreDto? Genre { get; set; }
-    }
+        string? Description,
+
+        AuthorForBookCreationDto Author,
+
+        GenreDto? Genre
+    );
 }
