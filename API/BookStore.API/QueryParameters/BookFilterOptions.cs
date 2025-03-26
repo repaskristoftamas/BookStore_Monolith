@@ -1,6 +1,6 @@
 ﻿namespace BookStore.API.QueryParameters
 {
-    public class FilterOptions// : PaginationParameters
+    public class BookFilterOptions// : PaginationParameters
     {
         public bool IncludeAuthor { get; set; }
         public bool IncludeGenre { get; set; }

@@ -57,7 +57,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [Fact]
         public void GetBooks_ShouldReturnAllBooks_WhenNoFiltersAreApplied()
         {
-            var filterOptions = new FilterOptions { };
+            var filterOptions = new BookFilterOptions { };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -67,7 +67,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [Fact]
         public void GetBooks_ShouldIncludeAuthor_WhenIncludeAuthorIsTrue()
         {
-            var filterOptions = new FilterOptions { IncludeAuthor = true };
+            var filterOptions = new BookFilterOptions { IncludeAuthor = true };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -78,7 +78,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [Fact]
         public void GetBooks_ShouldIncludeGenre_WhenIncludeGenreIsTrue()
         {
-            var filterOptions = new FilterOptions { IncludeGenre = true};
+            var filterOptions = new BookFilterOptions { IncludeGenre = true};
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -90,7 +90,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("title", "1984")]
         public void GetBooks_ShouldFilterByTitle_WhenFilterByIsTitle(string title, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = title, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = title, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -101,7 +101,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("title", "Európa elrablása")]
         public void GetBooks_ShouldFilterByTitleMultiple_WhenFilterByIsTitle(string title, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = title, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = title, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -112,7 +112,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("author", "J.R.R. Tolkien")]
         public void GetBooks_ShouldFilterByAuthor_WhenFilterByIsAuthor(string author, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = author, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = author, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -123,7 +123,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("author", "J.K. Rowling")]
         public void GetBooks_ShouldFilterByAuthorMultiple_WhenFilterByIsAuthor(string author, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = author, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = author, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -134,7 +134,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("author", "Historical Fiction")]
         public void GetBooks_ShouldFilterByGenre_WhenFilterByIsGenre(string genre, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = genre, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = genre, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -145,7 +145,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [InlineData("author", "Mystery")]
         public void GetBooks_ShouldFilterByGenreMultiple_WhenFilterByIsGenre(string genre, string query)
         {
-            var filterOptions = new FilterOptions { FilterBy = genre, Query = query };
+            var filterOptions = new BookFilterOptions { FilterBy = genre, Query = query };
 
             var result = _repository.GetBooks(filterOptions).ToList();
 
@@ -187,7 +187,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [Fact] //Service
         public void GetBooks_ShouldOrderByTitle_WhenOrderByIsImplicitlyTitle()
         {
-            var filterOptions = new FilterOptions { };
+            var filterOptions = new BookFilterOptions { };
             var result = _repository.GetBooks(filterOptions).ToList();
 
             result.Should().BeInAscendingOrder(b => b.Title, StringComparer.CurrentCulture);
@@ -196,7 +196,7 @@ namespace BookStoreAPI.Tests.RepositoryIntegrationTests
         [Fact] //Service
         public void GetBooks_ShouldOrderByTitle_WhenOrderByIsExplicitlyTitle()
         {
-            var filterOptions = new FilterOptions { OrderBy = "title" };
+            var filterOptions = new BookFilterOptions { OrderBy = "title" };
             var result = _repository.GetBooks(filterOptions).ToList();
 
             result.Should().BeInAscendingOrder(b => b.Title, StringComparer.CurrentCulture);
