@@ -4,8 +4,9 @@
     <div class="common-search">
       <input type="text" class="common-searchbox" (keydown.enter)="fetchBooks()" [(ngModel)]="query" [placeholder]="getPlaceholder()" [disabled]="!filterBy">
     </div>
-    
+
     <button (click)="fetchBooks()">Search</button>
+    <button (click)="resetBooks()">Reset</button>
 
     <div class="radioButtons">
       <label>
@@ -16,9 +17,6 @@
       </label>
       <label>
         <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="genre"> Filter by Genre
-      </label>
-      <label>
-        <input type="radio" class="radioFilterBy" [(ngModel)]="filterBy" value="" (change)="clearQueryIfNoFilter()"> No Filter
       </label>
     </div>
 

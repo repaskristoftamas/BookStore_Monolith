@@ -9,12 +9,27 @@ namespace BookStore.API.Repositories
     {
         private readonly BookStoreDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-        public IQueryable<Author> GetAuthors(AuthorQueryParameters authorQueryParameters)
+        public IQueryable<Author> GetAuthors(AuthorFilterOptions authorQueryParameters)
         {
             var authors = _context.Set<Author>().AsQueryable();
 
             return FilterByName(authors, authorQueryParameters.Query);
         }
+
+        public async Task<Author?> GetAuthorDetailsByIdAsync(int authorId)
+        {
+            return await _context.Set<Author>().FirstOrDefaultAsync(a => a.Id == authorId);
+        }
+
+        public async Task<Author> CreateAuthorAsync(Author author)
+        {
+            _context.Set<Author>().Add(author);
+            await _context.SaveChangesAsync();
+            return author;
+        }
+
+        public async Task<Author?> GetAuthorByNameAsync(string authorName) =>
+            await _context.Set<Author>().FirstOrDefaultAsync(a => a.Name == authorName);
 
         private IQueryable<Author> FilterByName(IQueryable<Author> authors, string? name)
         {

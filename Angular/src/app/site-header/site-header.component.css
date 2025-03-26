@@ -1,8 +1,11 @@
 .site-header {
     background-color: #333;
     padding: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
-  
+
   .site-header ul {
     list-style: none;
     padding: 0;
@@ -10,11 +13,11 @@
     display: flex;
     gap: 20px;
   }
-  
+
   .site-header li {
     display: inline;
   }
-  
+
   .site-header a {
     color: white;
     text-decoration: none;
@@ -28,8 +31,7 @@
     background-color: #ffcc00;
     color: black;
   }
-  
+
   .site-header a.active {
     border-bottom: 2px solid #ffcc00;
   }
-  

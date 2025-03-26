@@ -16,7 +16,7 @@ export class BookDetailsComponent {
   @Output() authorNameChange = new EventEmitter<string>();
   @Output() closeModal = new EventEmitter<void>();
   @Output() saveBook = new EventEmitter<Book>();
- 
+
   constructor(private bookService: BookService) {}
 
   close() {
@@ -30,7 +30,7 @@ export class BookDetailsComponent {
       console.error("Book is not defined or missing title or author!");
       return;
     }
-    
+
     const bookData = {
       title: this.book.title,
       description: this.book.description,
@@ -50,6 +50,8 @@ export class BookDetailsComponent {
       next: (response) => {
         console.log("Book saved successfully:", response);
         this.saveBook.emit(response);
+        this.close();
+        //fetch books but only refresh with the new book
       },
       error: (error) => console.error("Error saving new book:", error)
     });

@@ -13,7 +13,7 @@ namespace BookStore.API.Controllers
         private readonly IBookService _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks([FromQuery] FilterOptions filterOptions)
+        public async Task<ActionResult<IEnumerable<BookDto>>> GetBooks([FromQuery] BookFilterOptions filterOptions)
         {
             var result = await _bookService.GetBooksAsync(filterOptions);
 

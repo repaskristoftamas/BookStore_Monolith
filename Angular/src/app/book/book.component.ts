@@ -20,7 +20,7 @@ export class BookComponent {
   isModalOpen = false;
   selectedBook: Book | null = null;
   authorName: string = '';
-  isDisabled: boolean = true;
+  isDisabled: boolean = false;
 
   constructor(private bookService: BookService, private authorService: AuthorService) {}
 
@@ -54,10 +54,8 @@ export class BookComponent {
     }
   }
 
-  clearQueryIfNoFilter(): void {
-    if (!this.filterBy) {
-      this.query = '';
-    }
+  resetBooks(): void {
+    this.query = '';
     this.fetchBooks();
   }
 
