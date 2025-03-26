@@ -9,12 +9,27 @@ namespace BookStore.API.Repositories
     {
         private readonly BookStoreDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-        public IQueryable<Genre> GetGenres(GenreQueryParameters genreQueryParameters)
+        public IQueryable<Genre> GetGenres(GenreFilterOptions genreQueryParameters)
         {
             var genres = _context.Set<Genre>().AsQueryable();
 
             return FilterByName(genres, genreQueryParameters.Query);
         }
+
+        public async Task<Genre?> GetGenreDetailsByIdAsync(int genreId)
+        {
+            return await _context.Set<Genre>().FirstOrDefaultAsync(a => a.Id == genreId);
+        }
+
+        public async Task<Genre> CreateGenreAsync(Genre genre)
+        {
+            _context.Set<Genre>().Add(genre);
+            await _context.SaveChangesAsync();
+            return genre;
+        }
+
+        public async Task<Genre?> GetGenreByNameAsync(string genreName) =>
+            await _context.Set<Genre>().FirstOrDefaultAsync(a => a.Name == genreName);
 
         private IQueryable<Genre> FilterByName(IQueryable<Genre> genres, string? name)
         {

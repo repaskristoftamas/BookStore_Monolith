@@ -9,7 +9,7 @@ namespace BookStore.API.Repositories
     {
         private readonly BookStoreDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
-        public IQueryable<Book> GetBooks(FilterOptions filterOptions)
+        public IQueryable<Book> GetBooks(BookFilterOptions filterOptions)
         {
             var books = _context.Set<Book>().AsQueryable();
 
@@ -38,18 +38,6 @@ namespace BookStore.API.Repositories
             _context.Set<Book>().Add(book);
             await _context.SaveChangesAsync();
             return book;
-        }
-
-        public async Task<Author?> GetAuthorByNameAsync(string authorName) =>
-            await _context.Set<Author>().FirstOrDefaultAsync(a => a.Name == authorName);
-
-        public async Task<Genre?> GetGenreByNameAsync(string genreName) =>
-            await _context.Set<Genre>().FirstOrDefaultAsync(a => a.Name == genreName);
-
-        public async Task AddAuthorAsync(Author author)
-        {
-            _context.Set<Author>().Add(author);
-            await _context.SaveChangesAsync();
         }
 
         public async Task AddGenreAsync(Genre genre)
